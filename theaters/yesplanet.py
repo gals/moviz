@@ -5,6 +5,7 @@
 from theaters import Operator, Theater
 from utils.html import parse_html
 
+from urllib import urlencode
 import requests
 
 class YesPlanetTheater(Theater):
@@ -18,9 +19,32 @@ class YesPlanetTheater(Theater):
 		self.location_id = location_id
 		self.venue_type_id = venue_type_id
 
+	def __repr__(self):
+		return "<%s(location_id=%d, venue_type_id=%d)>" % (
+			self.__class__.__name__,
+			self.location_id,
+			self.venue_type_id)
+
+	def _build_showtimes_url(self, date=None):
+		"""
+		"""
+		params = {
+			"locationId": self.location_id,
+			"date": "null",
+			"venueTypeId": self.venue_type_id,
+			"hideSite": 0,
+			"openedFromPopup": 1,
+		}
+
+		return "http://www.yesplanet.co.il/scheduleInfo?%s" % (
+			urlencode(params))
+
 	def showtimes(self, date=None):
 		"""
 		"""
+		url = self._build_showtimes_url(date)
+		print url
+
 		return []
 
 class YesPlanet(Operator):

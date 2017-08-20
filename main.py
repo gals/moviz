@@ -6,9 +6,11 @@ from theaters.yesplanet import YesPlanet
 
 def main():
 	yp = YesPlanet()
-	with codecs.open("cinemas.txt", "wb", encoding="utf8") as f:
-		for theater in yp.theaters():
-			f.write(theater.name + "\n")
+	for theater in yp.theaters():
+		print theater
+		# with codecs.open("%s.txt", "wb", encoding="utf8") as f:
+		# 	for showtime in theater.showtimes():
+		# 		f.write(showtime)
 
 if __name__ == "__main__":
 	main()
