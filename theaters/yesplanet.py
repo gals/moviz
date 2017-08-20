@@ -3,8 +3,9 @@
 """
 
 from theaters import Operator, Theater
+from utils.html import parse_html
+
 import requests
-from bs4 import BeautifulSoup
 
 class YesPlanetTheater(Theater):
 	"""
@@ -39,9 +40,9 @@ class YesPlanet(Operator):
 		theaters = []
 
 		response = http.get("http://www.yesplanet.co.il/scheduleInfo")
-		data = response.content
+		html = response.content
 
-		parsed_html = html_parser(data, "html.parser")
+		parsed_html = html_parser(html)
 		select = parsed_html.select(".scheduleInfoSelect select")[0]
 		for option in select.find_all("option"):
 			name = option.text
@@ -55,7 +56,7 @@ class YesPlanet(Operator):
 
 		return theaters
 
-	def theaters(self, http=requests, html_parser=BeautifulSoup):
+	def theaters(self, http=requests, html_parser=parse_html):
 		"""
 		"""
 		if not self._theaters:
